@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ONSMALL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&family=Montserrat:wght@400;600&family=Raleway:wght@300;500&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Crypto Exchange</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,10 +13,31 @@
         }
 
         body {
-            background: #0a0a0a;
-            color: #ffffff;
-            font-family: 'Roboto', sans-serif;
-            overflow-x: hidden;
+            background: #000;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            min-height: 100vh;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055, 0 0 30px #ff0055;
+            }
+            to {
+                text-shadow: 0 0 20px #ff0055, 0 0 30px #ff0055, 0 0 40px #ff0055;
+            }
+        }
+
+        @keyframes waveEffect {
+            0% { transform: scale(1) skew(0deg); filter: blur(0px); opacity: 1; }
+            50% { transform: scale(1.1) skew(2deg); filter: blur(3px); opacity: 0.8; }
+            100% { transform: scale(1) skew(0deg); filter: blur(0px); opacity: 1; }
+        }
+
+        @keyframes lightUp {
+            0% { opacity: 0; filter: brightness(0); }
+            50% { opacity: 0.5; filter: brightness(0.5); }
+            100% { opacity: 1; filter: brightness(1); }
         }
 
         .loader {
@@ -26,290 +46,233 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0a0a0a;
+            background: #000;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            transition: opacity 0.5s ease;
+            transition: opacity 1s;
         }
 
         .loader.hidden {
             opacity: 0;
-            pointer-events: none;
         }
 
         .loader-text {
-            font-family: 'Orbitron', sans-serif;
             font-size: 48px;
             color: #ff0055;
-            text-shadow: 0 0 10px #ff0055;
             animation: glow 1.5s ease-in-out infinite alternate;
         }
 
-        .welcome-screen {
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            color: #ff0055;
+            font-size: 24px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff0055;
+        }
+
+        .hero {
             height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            position: relative;
-            background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
-        }
-
-        .welcome-title {
-            font-size: 72px;
-            margin-bottom: 40px;
+            justify-content: center;
             text-align: center;
+            padding: 0 20px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://source.unsplash.com/random/1920x1080/?cryptocurrency') center/cover;
         }
 
-        .welcome-title span {
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #ff0055;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .cta-button {
+            background: #ff0055;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
             display: inline-block;
-            animation: fadeInUp 0.8s ease forwards;
-            opacity: 0;
-            margin: 0 10px;
         }
 
-        .welcome-subtitle {
-            font-size: 24px;
-            text-align: center;
-            margin-top: 20px;
-            background: linear-gradient(90deg, #ff0055, #00ff88, #ff0055);
-            background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: gradient 3s linear infinite;
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
         }
 
-        .content-section {
-            padding: 100px 20px;
-            text-align: center;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin: 60px auto;
+        .info-container {
+            padding: 40px 20px;
             max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .feature-card {
+        .info-panel {
             background: rgba(255, 0, 85, 0.1);
             border: 1px solid #ff0055;
             border-radius: 10px;
-            padding: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
         }
 
-        .feature-card:hover {
-            transform: translateY(-10px);
+        .info-panel:hover {
+            transform: translateY(-5px);
             box-shadow: 0 0 20px rgba(255, 0, 85, 0.3);
+            background: rgba(255, 0, 85, 0.15);
         }
 
-        .feature-title {
-            font-family: 'Montserrat', sans-serif;
+        .info-title {
+            color: #ff0055;
             font-size: 24px;
             margin-bottom: 15px;
-            color: #ff0055;
+            text-shadow: 0 0 5px #ff0055;
         }
 
-        .feature-text {
-            font-family: 'Raleway', sans-serif;
+        .info-text {
             line-height: 1.6;
+            color: #ffffff;
+            font-size: 16px;
         }
 
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .arrows {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .arrow {
-            width: 20px;
-            height: 20px;
-            border-right: 3px solid #ff0055;
-            border-bottom: 3px solid #ff0055;
-            transform: rotate(45deg);
-            margin: -10px;
-            animation: arrowBounce 2s infinite;
-        }
-
-        .neon-text {
-            font-family: 'Orbitron', sans-serif;
-            color: #ff0055;
-            text-shadow: 0 0 5px #ff0055, 0 0 15px #ff0055, 0 0 30px #ff0055;
-            animation: neonPulse 1.5s ease-in-out infinite alternate;
-        }
-
-        .footer {
-            padding: 40px 0;
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px 0;
             text-align: center;
-            background: rgba(10, 10, 10, 0.9);
-            border-top: 1px solid rgba(255, 0, 85, 0.3);
+            position: relative;
+            bottom: 0;
+            width: 100%;
         }
 
-        .social-links {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .social-link {
-            display: inline-flex;
-            align-items: center;
+        .footer-text {
             color: #fff;
-            text-decoration: none;
-            padding: 10px 20px;
-            border: 1px solid #ff0055;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            background: rgba(255, 0, 85, 0.1);
-        }
-
-        .social-link:hover {
-            background: rgba(255, 0, 85, 0.2);
-            transform: translateY(-3px);
-            box-shadow: 0 0 15px rgba(255, 0, 85, 0.3);
-        }
-
-        .social-link i {
-            margin-right: 10px;
-            color: #ff0055;
-        }
-
-        .copyright {
-            font-family: 'Orbitron', sans-serif;
-            color: #ff0055;
             font-size: 14px;
-            margin-top: 20px;
         }
 
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 5px #ff0055, 0 0 10px #ff0055, 0 0 15px #ff0055;
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
             }
-            to {
-                text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055, 0 0 30px #ff0055;
-            }
-        }
 
-        @keyframes arrowBounce {
-            0% { opacity: 0; transform: rotate(45deg) translate(-20px, -20px); }
-            50% { opacity: 1; }
-            100% { opacity: 0; transform: rotate(45deg) translate(20px, 20px); }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+            .hero-content h1 {
+                font-size: 36px;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
 
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes neonPulse {
-            from {
-                text-shadow: 0 0 5px #ff0055, 0 0 15px #ff0055, 0 0 30px #ff0055;
-            }
-            to {
-                text-shadow: 0 0 10px #ff0055, 0 0 25px #ff0055, 0 0 40px #ff0055;
+            .hero-content p {
+                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
     <div class="loader">
-        <div class="loader-text">ONSMALL</div>
+        <div class="loader-text">Loading...</div>
     </div>
 
-    <div class="welcome-screen">
-        <h1 class="welcome-title">
-            <span style="font-family: 'Playfair Display'">Добро</span>
-            <span style="font-family: 'Montserrat'">пожаловать</span>
-            <span style="font-family: 'Raleway'">в</span>
-            <span style="font-family: 'Orbitron'" class="neon-text">ONSMALL</span>
-        </h1>
-        <p class="welcome-subtitle">Ваш надежный партнер в мире криптовалют</p>
-        <div class="scroll-indicator">
-            <div class="arrows">
-                <div class="arrow"></div>
-                <div class="arrow"></div>
-                <div class="arrow"></div>
+    <header>
+        <nav>
+            <a href="#" class="logo">CryptoExchange</a>
+            <div class="nav-links">
+                <a href="#">Главная</a>
+                <a href="#">О нас</a>
+                <a href="#">Обмен</a>
+                <a href="#">Контакты</a>
             </div>
-        </div>
-    </div>
+        </nav>
+    </header>
 
-    <section class="content-section">
-        <h2 class="neon-text">Наши преимущества</h2>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h3 class="feature-title">Безопасность</h3>
-                <p class="feature-text">Гарантируем безопасность всех операций и сохранность ваших средств</p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">Скорость</h3>
-                <p class="feature-text">Быстрое проведение транзакций и моментальная поддержка</p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">Надежность</h3>
-                <p class="feature-text">Проверенные временем решения и профессиональный подход</p>
-            </div>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Безопасный обмен криптовалют</h1>
+            <p>Мгновенные транзакции с лучшими курсами</p>
+            <a href="#" class="cta-button">Начать обмен</a>
         </div>
     </section>
 
-    <section class="content-section">
-        <h2 class="neon-text">Присоединяйтесь к нам</h2>
-        <p class="welcome-subtitle">Станьте частью растущего сообщества ONSMALL</p>
+    <section class="info-container">
+        <div class="info-panel">
+            <h3 class="info-title">Наша миссия</h3>
+            <p class="info-text">Обеспечить безопасные и быстрые криптовалютные операции для всех пользователей</p>
+        </div>
+        
+        <div class="info-panel">
+            <h3 class="info-title">Преимущества работы с нами</h3>
+            <p class="info-text">Профессиональный подход, круглосуточная поддержка и гарантированная безопасность</p>
+        </div>
+        
+        <div class="info-panel">
+            <h3 class="info-title">Как начать работу</h3>
+            <p class="info-text">Присоединяйтесь к нашему сообществу в Telegram и начните работу прямо сейчас</p>
+        </div>
     </section>
 
-    <footer class="footer">
-        <div class="social-links">
-            <a href="https://t.me/BaconsTopRLLY" class="social-link" target="_blank">
-                <i class="fab fa-telegram"></i>Владелец
-            </a>
-            <a href="https://t.me/afradissa" class="social-link" target="_blank">
-                <i class="fab fa-telegram"></i>Заместитель
-            </a>
-            <a href="https://t.me/OnsmallReport" class="social-link" target="_blank">
-                <i class="fab fa-telegram"></i>База
-            </a>
-            <a href="https://t.me/OnsmallNews" class="social-link" target="_blank">
-                <i class="fab fa-telegram"></i>Канал
-            </a>
-            <a href="https://t.me/Onsmalbot" class="social-link" target="_blank">
-                <i class="fab fa-telegram"></i>Бот
-            </a>
-        </div>
-        <div class="copyright">
-            © 2025 ONSMALL
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text">© 2024 CryptoExchange. Все права защищены.</p>
         </div>
     </footer>
 
     <script>
-        window.addEventListener('load', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
-                document.querySelector('.loader').classList.add('hidden');
+                const loader = document.querySelector('.loader');
+                loader.classList.add('hidden');
+                
+                document.body.style.animation = 'lightUp 1s ease-in-out forwards';
+                
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 1000);
             }, 2000);
         });
     </script>
