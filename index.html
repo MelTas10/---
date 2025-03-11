@@ -4,365 +4,262 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONSMALL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&family=Montserrat:wght@400;600&family=Raleway:wght@300;500&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
         }
 
         :root {
             --main-color: #ff0055;
-            --accent-color: #00ff88;
-            --text-color: #ffffff;
+            --text-light: #e6e6e6;
+            --text-dark: #cccccc;
             --bg-color: #0a0a0a;
         }
 
         body {
             background: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Roboto', sans-serif;
-            overflow-x: hidden;
-            cursor: none;
+            color: var(--text-light);
+            line-height: 1.6;
         }
 
-        .custom-cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--main-color);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.2s ease;
-        }
-
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 0.5s ease;
-        }
-
-        .loader-animation {
-            position: relative;
-            width: 200px;
-            height: 200px;
-        }
-
-        .loader-circle {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 4px solid transparent;
-            border-top-color: var(--main-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        .loader-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
-            color: var(--main-color);
-            text-shadow: 0 0 10px var(--main-color);
-            animation: pulse 1.5s ease-in-out infinite alternate;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            padding: 40px;
-            max-width: 1400px;
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 40px 20px;
         }
 
-        .feature-card {
-            background: rgba(255, 0, 85, 0.1);
+        .panel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--main-color);
             border-radius: 15px;
             padding: 25px;
             transition: all 0.3s ease;
-            cursor: pointer;
-            overflow: hidden;
             position: relative;
+            overflow: hidden;
         }
 
-        .feature-card::before {
+        .panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 0, 85, 0.2);
+        }
+
+        .panel::before {
             content: '';
             position: absolute;
-            top: -100%;
+            top: 0;
             left: -100%;
-            width: 300%;
-            height: 300%;
-            background: linear-gradient(45deg, transparent, rgba(255, 0, 85, 0.2), transparent);
-            transition: all 0.6s ease;
-            transform: rotate(45deg);
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 0, 85, 0.1),
+                transparent
+            );
+            transition: 0.5s;
         }
 
-        .feature-card:hover::before {
-            top: 100%;
+        .panel:hover::before {
             left: 100%;
         }
 
-        .feature-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 0 30px rgba(255, 0, 85, 0.3);
-        }
-
-        .feature-icon {
-            font-size: 40px;
-            color: var(--main-color);
-            margin-bottom: 20px;
-        }
-
-        .feature-title {
-            font-family: 'Orbitron', sans-serif;
+        .panel-title {
             font-size: 22px;
+            font-weight: 600;
             color: var(--main-color);
             margin-bottom: 15px;
-            text-transform: uppercase;
+            position: relative;
         }
 
-        .feature-description {
-            color: var(--text-color);
-            line-height: 1.6;
-            font-size: 16px;
-        }
-
-        .floating-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .particle {
+        .panel-title::after {
+            content: '';
             position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
             background: var(--main-color);
-            border-radius: 50%;
-            opacity: 0.5;
-            animation: float 15s infinite linear;
+            transition: width 0.3s ease;
         }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-            }
-            50% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(-1000px) rotate(360deg);
-                opacity: 0;
-            }
+        .panel:hover .panel-title::after {
+            width: 100px;
         }
 
-        @keyframes spin {
+        .panel-content {
+            color: var(--text-dark);
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .feature-list {
+            margin: 15px 0;
+            list-style: none;
+        }
+
+        .feature-item {
+            padding: 8px 0;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            animation: slideIn 0.5s ease forwards;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .feature-item::before {
+            content: '→';
+            color: var(--main-color);
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover::before {
+            transform: translateX(5px);
+        }
+
+        .stat-panel {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--main-color);
+            margin-bottom: 10px;
+            animation: countUp 2s ease-out forwards;
+        }
+
+        .info-card {
+            background: linear-gradient(45deg, rgba(255,0,85,0.1), transparent);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .info-card h3 {
+            color: var(--main-color);
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .info-card p {
+            color: var(--text-light);
+        }
+
+        @keyframes slideIn {
             to {
-                transform: rotate(360deg);
+                opacity: 1;
+                transform: translateX(0);
             }
         }
 
-        @keyframes pulse {
+        @keyframes countUp {
             from {
-                opacity: 0.5;
-                transform: scale(0.95);
+                opacity: 0;
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
-                transform: scale(1.05);
+                transform: translateY(0);
             }
         }
 
-        .heart {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 100px;
-            color: var(--main-color);
-            text-shadow: 0 0 20px var(--main-color);
-            animation: heartBeat 1.5s ease-in-out infinite;
-            opacity: 0;
-            transition: opacity 0.5s ease;
+        .pulse {
+            animation: pulse 2s infinite;
         }
 
-        @keyframes heartBeat {
+        @keyframes pulse {
             0% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-            14% {
-                transform: translate(-50%, -50%) scale(1.3);
-            }
-            28% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-            42% {
-                transform: translate(-50%, -50%) scale(1.3);
-            }
-            70% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-
-        /* Добавляем новые панели */
-        .info-panels {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 40px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .info-panel {
-            background: rgba(255, 0, 85, 0.1);
-            border: 2px solid var(--main-color);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .info-panel:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0 30px rgba(255, 0, 85, 0.3);
-        }
-
-        .info-panel h3 {
-            color: var(--main-color);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        .info-panel p {
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-
-        /* Добавляем анимированный фон */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.1;
-            background: 
-                linear-gradient(45deg, 
-                    transparent 0%, 
-                    var(--main-color) 45%, 
-                    var(--accent-color) 55%, 
-                    transparent 100%);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-        }
-
-        @keyframes gradientBG {
-            0% {
-                background-position: 0% 50%;
+                transform: scale(1);
             }
             50% {
-                background-position: 100% 50%;
+                transform: scale(1.05);
             }
             100% {
-                background-position: 0% 50%;
+                transform: scale(1);
+            }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
             }
         }
 
     </style>
 </head>
 <body>
-    <div class="custom-cursor"></div>
-    <div class="animated-bg"></div>
-    <div class="floating-particles"></div>
-    
-    <div class="loader">
-        <div class="loader-animation">
-            <div class="loader-circle"></div>
-            <div class="loader-text">ONSMALL</div>
+    <div class="container">
+        <div class="panel-grid">
+            <div class="panel">
+                <h2 class="panel-title">Функционал</h2>
+                <ul class="feature-list">
+                    <li class="feature-item">Быстрая загрузка</li>
+                    <li class="feature-item">Адаптивный дизайн</li>
+                    <li class="feature-item">Современные технологии</li>
+                    <li class="feature-item">Оптимизация SEO</li>
+                </ul>
+            </div>
+
+            <div class="panel stat-panel">
+                <div class="stat-number pulse">98%</div>
+                <p class="panel-content">Удовлетворенность клиентов</p>
+            </div>
+
+            <div class="panel">
+                <h2 class="panel-title">Преимущества</h2>
+                <p class="panel-content">
+                    Инновационные решения для вашего бизнеса с использованием
+                    передовых технологий и современных подходов
+                </p>
+            </div>
+        </div>
+
+        <div class="panel-grid">
+            <div class="info-card floating">
+                <h3>Инновации</h3>
+                <p>Используем передовые технологии для достижения максимальных результатов</p>
+            </div>
+
+            <div class="info-card floating">
+                <h3>Качество</h3>
+                <p>Гарантируем высокое качество всех предоставляемых услуг</p>
+            </div>
+
+            <div class="info-card floating">
+                <h3>Поддержка</h3>
+                <p>Обеспечиваем круглосуточную техническую поддержку</p>
+            </div>
         </div>
     </div>
 
-    <div class="heart">❤️</div>
-
-    <!-- Остальной контент остается прежним -->
-    
     <script>
-        // Создаем плавающие частицы
-        function createParticles() {
-            const container = document.querySelector('.floating-particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.width = Math.random() * 5 + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                container.appendChild(particle);
-            }
-        }
-
-        // Кастомный курсор
-        document.addEventListener('mousemove', (e) => {
-            const cursor = document.querySelector('.custom-cursor');
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        // Анимация загрузки
-        window.addEventListener('load', () => {
-            createParticles();
-            
-            setTimeout(() => {
-                const loader = document.querySelector('.loader');
-                const heart = document.querySelector('.heart');
-                
-                loader.style.opacity = '0';
-                heart.style.opacity = '1';
-                
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    
-                    setTimeout(() => {
-                        heart.style.opacity = '0';
-                        setTimeout(() => {
-                            heart.style.display = 'none';
-                        }, 500);
-                    }, 2000);
-                }, 500);
-            }, 2000);
-        });
-
-        // Эффект при наведении на карточки
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-10px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0) scale(1)';
-            });
+        // Анимация появления элементов списка
+        document.querySelectorAll('.feature-item').forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.2}s`;
         });
     </script>
 </body>
