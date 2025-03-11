@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONSMALL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&family=Montserrat:wght@400;600&family=Raleway:wght@300;500&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Permanent+Marker&family=Pacifico&family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&family=Montserrat:wght@400;600&family=Raleway:wght@300;500&family=Playfair+Display:wght@400;700&family=Quicksand&family=Sacramento&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         * {
@@ -63,12 +63,17 @@
             text-align: center;
         }
 
-        .welcome-title span {
+        .welcome-word {
             display: inline-block;
             animation: fadeInUp 0.8s ease forwards;
             opacity: 0;
-            margin: 0 10px;
+            margin: 0 15px;
         }
+
+        .welcome-word:nth-child(1) { font-family: 'Dancing Script', cursive; animation-delay: 0.2s; }
+        .welcome-word:nth-child(2) { font-family: 'Permanent Marker', cursive; animation-delay: 0.4s; }
+        .welcome-word:nth-child(3) { font-family: 'Pacifico', cursive; animation-delay: 0.6s; }
+        .welcome-word:nth-child(4) { font-family: 'Orbitron', sans-serif; animation-delay: 0.8s; }
 
         .welcome-subtitle {
             font-size: 24px;
@@ -82,73 +87,82 @@
             animation: gradient 3s linear infinite;
         }
 
+        .scroll-arrows {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .arrow {
+            width: 30px;
+            height: 30px;
+            border-right: 3px solid #ff0055;
+            border-bottom: 3px solid #ff0055;
+            transform: rotate(45deg);
+            animation: arrowPulse 2s infinite;
+        }
+
+        .arrow:nth-child(1) { animation-delay: 0s; }
+        .arrow:nth-child(2) { animation-delay: 0.2s; }
+        .arrow:nth-child(3) { animation-delay: 0.4s; }
+
         .content-section {
+            min-height: 100vh;
             padding: 100px 20px;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 48px;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #ff0055, #00ff88, #ff0055);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: gradient 3s linear infinite;
         }
 
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 40px;
-            margin: 60px auto;
+            margin-top: 60px;
             max-width: 1200px;
         }
 
         .feature-card {
             background: rgba(255, 0, 85, 0.1);
             border: 1px solid #ff0055;
-            border-radius: 10px;
+            border-radius: 15px;
             padding: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 0 20px rgba(255, 0, 85, 0.3);
+            box-shadow: 0 0 30px rgba(255, 0, 85, 0.3);
         }
 
         .feature-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 24px;
-            margin-bottom: 15px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 28px;
             color: #ff0055;
+            margin-bottom: 20px;
         }
 
-        .feature-text {
-            font-family: 'Raleway', sans-serif;
+        .feature-description {
+            font-family: 'Sacramento', cursive;
+            font-size: 20px;
             line-height: 1.6;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .arrows {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .arrow {
-            width: 20px;
-            height: 20px;
-            border-right: 3px solid #ff0055;
-            border-bottom: 3px solid #ff0055;
-            transform: rotate(45deg);
-            margin: -10px;
-            animation: arrowBounce 2s infinite;
-        }
-
-        .neon-text {
-            font-family: 'Orbitron', sans-serif;
-            color: #ff0055;
-            text-shadow: 0 0 5px #ff0055, 0 0 15px #ff0055, 0 0 30px #ff0055;
-            animation: neonPulse 1.5s ease-in-out infinite alternate;
         }
 
         .footer {
@@ -196,6 +210,37 @@
             margin-top: 20px;
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes arrowPulse {
+            0% {
+                opacity: 0;
+                transform: rotate(45deg) translate(-20px, -20px);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(45deg) translate(20px, 20px);
+            }
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         @keyframes glow {
             from {
                 text-shadow: 0 0 5px #ff0055, 0 0 10px #ff0055, 0 0 15px #ff0055;
@@ -205,27 +250,10 @@
             }
         }
 
-        @keyframes arrowBounce {
-            0% { opacity: 0; transform: rotate(45deg) translate(-20px, -20px); }
-            50% { opacity: 1; }
-            100% { opacity: 0; transform: rotate(45deg) translate(20px, 20px); }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .neon-text {
+            color: #ff0055;
+            text-shadow: 0 0 5px #ff0055, 0 0 15px #ff0055, 0 0 30px #ff0055;
+            animation: neonPulse 1.5s ease-in-out infinite alternate;
         }
 
         @keyframes neonPulse {
@@ -245,41 +273,39 @@
 
     <div class="welcome-screen">
         <h1 class="welcome-title">
-            <span style="font-family: 'Playfair Display'">Добро</span>
-            <span style="font-family: 'Montserrat'">пожаловать</span>
-            <span style="font-family: 'Raleway'">в</span>
-            <span style="font-family: 'Orbitron'" class="neon-text">ONSMALL</span>
+            <span class="welcome-word">Добро</span>
+            <span class="welcome-word">пожаловать</span>
+            <span class="welcome-word">в</span>
+            <span class="welcome-word neon-text">ONSMALL</span>
         </h1>
         <p class="welcome-subtitle">Ваш надежный партнер в мире криптовалют</p>
-        <div class="scroll-indicator">
-            <div class="arrows">
-                <div class="arrow"></div>
-                <div class="arrow"></div>
-                <div class="arrow"></div>
-            </div>
+        <div class="scroll-arrows">
+            <div class="arrow"></div>
+            <div class="arrow"></div>
+            <div class="arrow"></div>
         </div>
     </div>
 
     <section class="content-section">
-        <h2 class="neon-text">Наши преимущества</h2>
+        <h2 class="section-title">Наши преимущества</h2>
         <div class="feature-grid">
             <div class="feature-card">
                 <h3 class="feature-title">Безопасность</h3>
-                <p class="feature-text">Гарантируем безопасность всех операций и сохранность ваших средств</p>
+                <p class="feature-description">Гарантируем безопасность всех операций и сохранность ваших средств</p>
             </div>
             <div class="feature-card">
                 <h3 class="feature-title">Скорость</h3>
-                <p class="feature-text">Быстрое проведение транзакций и моментальная поддержка</p>
+                <p class="feature-description">Быстрое проведение транзакций и моментальная поддержка</p>
             </div>
             <div class="feature-card">
                 <h3 class="feature-title">Надежность</h3>
-                <p class="feature-text">Проверенные временем решения и профессиональный подход</p>
+                <p class="feature-description">Проверенные временем решения и профессиональный подход</p>
             </div>
         </div>
     </section>
 
     <section class="content-section">
-        <h2 class="neon-text">Присоединяйтесь к нам</h2>
+        <h2 class="section-title">Присоединяйтесь к нам</h2>
         <p class="welcome-subtitle">Станьте частью растущего сообщества ONSMALL</p>
     </section>
 
