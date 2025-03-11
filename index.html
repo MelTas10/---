@@ -1,19 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ONSMALL - SCAM BASE</title>
+    <title>ONSMALL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Permanent+Marker&family=Pacifico&family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&family=Montserrat:wght@400;600&family=Raleway:wght@300;500&family=Playfair+Display:wght@400;700&family=Quicksand&family=Sacramento&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
-        :root {
-            --neon-color: #0ff;
-            --neon-border: #08f;
-            --bg-color: #111;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -21,157 +14,321 @@
         }
 
         body {
-            background: var(--bg-color);
-            color: #fff;
-            font-family: 'Montserrat', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
             overflow-x: hidden;
         }
 
-        .header {
-            position: relative;
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            color: #ff0055;
+            text-shadow: 0 0 10px #ff0055;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        .girl-container {
+            position: absolute;
+            bottom: 20%;
+            right: 10%;
+            z-index: 2;
+        }
+
+        .girl-image {
+            width: 200px;
+            height: auto;
+            animation: floatAnimation 3s ease-in-out infinite;
+        }
+
+        .heart {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ff0055;
+            font-size: 0;
+            opacity: 0;
+            animation: heartBeat 2s ease-in-out infinite;
+        }
+
+        @keyframes floatAnimation {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes heartBeat {
+            0% { 
+                font-size: 0;
+                opacity: 0;
+            }
+            50% {
+                font-size: 40px;
+                opacity: 1;
+            }
+            100% {
+                font-size: 30px;
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+        }
+
+        .welcome-screen {
             height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            background: linear-gradient(45deg, #000, #111);
-        }
-
-        .main-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 4em;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-bottom: 20px;
+            align-items: center;
             position: relative;
-            animation: neonPulse 1.5s infinite alternate;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
         }
 
-        .scam-base {
-            font-size: 1.5em;
-            color: var(--neon-color);
-            text-shadow: 0 0 10px var(--neon-color);
-            margin-bottom: 50px;
-        }
-
-        .content-section {
-            padding: 100px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+        .welcome-title {
+            font-size: 72px;
+            margin-bottom: 40px;
             text-align: center;
+        }
+
+        .welcome-word {
+            display: inline-block;
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+            margin: 0 15px;
+        }
+
+        .welcome-word:nth-child(1) { font-family: 'Dancing Script', cursive; animation-delay: 0.2s; }
+        .welcome-word:nth-child(2) { font-family: 'Permanent Marker', cursive; animation-delay: 0.4s; }
+        .welcome-word:nth-child(3) { font-family: 'Pacifico', cursive; animation-delay: 0.6s; }
+        .welcome-word:nth-child(4) { font-family: 'Orbitron', sans-serif; animation-delay: 0.8s; }
+
+        .welcome-subtitle {
+            font-size: 24px;
+            text-align: center;
+            margin-top: 20px;
+            background: linear-gradient(90deg, #ff0055, #00ff88, #ff0055);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: gradient 3s linear infinite;
         }
 
         .scroll-arrows {
             position: absolute;
             bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-            cursor: pointer;
+            gap: 5px;
         }
 
         .arrow {
             width: 30px;
             height: 30px;
-            border-right: 4px solid var(--neon-color);
-            border-bottom: 4px solid var(--neon-color);
+            border-right: 3px solid #ff0055;
+            border-bottom: 3px solid #ff0055;
             transform: rotate(45deg);
-            animation: arrowBlink 1s infinite alternate;
+            animation: arrowPulse 2s infinite;
         }
 
-        .arrow:nth-child(2) {
-            animation-delay: 0.2s;
+        .arrow:nth-child(1) { animation-delay: 0s; }
+        .arrow:nth-child(2) { animation-delay: 0.2s; }
+        .arrow:nth-child(3) { animation-delay: 0.4s; }
+
+        .content-section {
+            min-height: 100vh;
+            padding: 100px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .arrow:nth-child(3) {
-            animation-delay: 0.4s;
+        .section-title {
+            font-size: 48px;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #ff0055, #00ff88, #ff0055);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: gradient 3s linear infinite;
         }
 
-        .join-text {
-            font-size: 2em;
-            margin: 20px 0;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s forwards;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+            max-width: 1200px;
         }
 
-        .community-text {
-            font-size: 1.5em;
+        .feature-card {
+            background: rgba(255, 0, 85, 0.1);
+            border: 1px solid #ff0055;
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(255, 0, 85, 0.3);
+        }
+
+        .feature-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 28px;
+            color: #ff0055;
+            margin-bottom: 20px;
+        }
+
+        .feature-description {
+            font-family: 'Sacramento', cursive;
+            font-size: 20px;
             line-height: 1.6;
-            margin: 30px 0;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s 0.3s forwards;
         }
 
-        /* Анимации */
-        @keyframes neonPulse {
-            from {
-                text-shadow: 0 0 10px var(--neon-color),
-                           0 0 20px var(--neon-color),
-                           0 0 30px var(--neon-color);
-            }
-            to {
-                text-shadow: 0 0 20px var(--neon-color),
-                           0 0 40px var(--neon-color),
-                           0 0 60px var(--neon-color);
-            }
+        .footer {
+            padding: 40px 0;
+            text-align: center;
+            background: rgba(10, 10, 10, 0.9);
+            border-top: 1px solid rgba(255, 0, 85, 0.3);
         }
 
-        @keyframes arrowBlink {
-            from {
-                opacity: 0.3;
-                transform: rotate(45deg) scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: rotate(45deg) scale(1);
-            }
+        .social-links {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid #ff0055;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            background: rgba(255, 0, 85, 0.1);
+        }
+
+        .social-link:hover {
+            background: rgba(255, 0, 85, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.3);
+        }
+
+        .social-link i {
+            margin-right: 10px;
+            color: #ff0055;
+        }
+
+        .copyright {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff0055;
+            font-size: 14px;
+            margin-top: 20px;
         }
 
         @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        /* Эффект следования за курсором */
-        .cursor-effect {
-            position: fixed;
-            pointer-events: none;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 9999;
+        @keyframes arrowPulse {
+            0% {
+                opacity: 0;
+                transform: rotate(45deg) translate(-20px, -20px);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(45deg) translate(20px, 20px);
+            }
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #ff0055, 0 0 10px #ff0055, 0 0 15px #ff0055;
+            }
+            to {
+                text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055, 0 0 30px #ff0055;
+            }
         }
 
         .neon-text {
-            position: relative;
-            overflow: hidden;
+            color: #ff0055;
+            text-shadow: 0 0 5px #ff0055, 0 0 15px #ff0055, 0 0 30px #ff0055;
+            animation: neonPulse 1.5s ease-in-out infinite alternate;
         }
 
-        .neon-text::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--neon-color), transparent);
-            transition: 0.5s;
-        }
-
-        .neon-text:hover::before {
-            left: 100%;
+        @keyframes neonPulse {
+            from {
+                text-shadow: 0 0 5px #ff0055, 0 0 15px #ff0055, 0 0 30px #ff0055;
+            }
+            to {
+                text-shadow: 0 0 10px #ff0055, 0 0 25px #ff0055, 0 0 40px #ff0055;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1 class="main-title neon-text">ONSMALL</h1>
-        <div class="scam-base">SCAM BASE</div>
+    <div class="loader">
+        <div class="loader-text">ONSMALL</div>
+    </div>
+
+    <div class="welcome-screen">
+        <div class="girl-container">
+            <i class="fas fa-heart heart"></i>
+            <img src="images/girl.png" alt="Girl" class="girl-image">
+        </div>
         
+        <h1 class="welcome-title">
+            <span class="welcome-word">Добро</span>
+            <span class="welcome-word">пожаловать</span>
+            <span class="welcome-word">в</span>
+            <span class="welcome-word neon-text">ONSMALL</span>
+        </h1>
+        <p class="welcome-subtitle">Ваш надежный партнер в мире криптовалют</p>
         <div class="scroll-arrows">
             <div class="arrow"></div>
             <div class="arrow"></div>
@@ -179,48 +336,57 @@
         </div>
     </div>
 
-    <div class="content-section">
-        <h2 class="join-text neon-text">Присоединяйтесь к нам</h2>
-        <p class="community-text">
-            Станьте частью растущего сообщества ONSMALL - места, где инновации встречаются с возможностями. 
-            Мы создаем будущее вместе с вами, объединяя лучшие умы и революционные идеи.
-            Присоединяйтесь к нашей платформе и откройте для себя новые горизонты успеха.
-        </p>
-        <p class="community-text">
-            ONSMALL - это не просто сообщество, это движение. 
-            Мы предоставляем передовые инструменты, экспертную поддержку и уникальные возможности для роста.
-            Вместе мы создаем будущее, где каждый может достичь своих целей.
-        </p>
-    </div>
+    <section class="content-section">
+        <h2 class="section-title">Наши преимущества</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3 class="feature-title">Безопасность</h3>
+                <p class="feature-description">Гарантируем безопасность всех операций и сохранность ваших средств</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Скорость</h3>
+                <p class="feature-description">Быстрое проведение транзакций и моментальная поддержка</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Надежность</h3>
+                <p class="feature-description">Проверенные временем решения и профессиональный подход</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2 class="section-title">Присоединяйтесь к нам</h2>
+        <p class="welcome-subtitle">Станьте частью растущего сообщества ONSMALL</p>
+    </section>
+
+    <footer class="footer">
+        <div class="social-links">
+            <a href="https://t.me/BaconsTopRLLY" class="social-link" target="_blank">
+                <i class="fab fa-telegram"></i>Владелец
+            </a>
+            <a href="https://t.me/afradissa" class="social-link" target="_blank">
+                <i class="fab fa-telegram"></i>Заместитель
+            </a>
+            <a href="https://t.me/OnsmallReport" class="social-link" target="_blank">
+                <i class="fab fa-telegram"></i>База
+            </a>
+            <a href="https://t.me/OnsmallNews" class="social-link" target="_blank">
+                <i class="fab fa-telegram"></i>Канал
+            </a>
+            <a href="https://t.me/Onsmalbot" class="social-link" target="_blank">
+                <i class="fab fa-telegram"></i>Бот
+            </a>
+        </div>
+        <div class="copyright">
+            © 2025 ONSMALL
+        </div>
+    </footer>
 
     <script>
-        // Эффект следования за курсором
-        document.addEventListener('mousemove', (e) => {
-            const cursor = document.createElement('div');
-            cursor.className = 'cursor-effect';
-            cursor.innerHTML = 'ONSMALL';
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            cursor.style.color = var(--neon-color);
-            document.body.appendChild(cursor);
-
+        window.addEventListener('load', () => {
             setTimeout(() => {
-                cursor.style.opacity = '1';
-                cursor.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px)`;
-            }, 10);
-
-            setTimeout(() => {
-                cursor.style.opacity = '0';
-                setTimeout(() => cursor.remove(), 300);
-            }, 500);
-        });
-
-        // Плавная прокрутка при клике на стрелки
-        document.querySelector('.scroll-arrows').addEventListener('click', () => {
-            window.scrollTo({
-                top: window.innerHeight,
-                behavior: 'smooth'
-            });
+                document.querySelector('.loader').classList.add('hidden');
+            }, 2000);
         });
     </script>
 </body>
