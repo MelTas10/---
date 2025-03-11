@@ -18,28 +18,7 @@
             color: #ffffff;
             font-family: 'Roboto', sans-serif;
             overflow-x: hidden;
-            cursor: none;
-        }
-
-        .custom-cursor {
-            width: 20px;
-            height: 20px;
-            background: #ff0055;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s;
-        }
-
-        .cursor-text {
-            position: absolute;
-            color: #ff0055;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
-            pointer-events: none;
-            animation: fadeOut 1s forwards;
-            white-space: nowrap;
+            cursor: default;
         }
 
         .loader {
@@ -56,8 +35,9 @@
             transition: opacity 0.5s ease;
         }
 
-        .loader-content {
-            text-align: center;
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .loader-text {
@@ -65,26 +45,79 @@
             font-size: 48px;
             color: #ff0055;
             text-shadow: 0 0 10px #ff0055;
-            animation: loaderAnimation 3s ease-in-out forwards;
+            animation: glow 1.5s ease-in-out infinite alternate;
         }
 
-        .loader-heart {
-            font-size: 48px;
-            color: #ff0055;
+        .welcome-screen {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
+            overflow: hidden;
+        }
+
+        .welcome-title {
+            font-size: 72px;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .welcome-title span {
+            display: inline-block;
+            animation: fadeInUp 0.8s ease forwards;
             opacity: 0;
-            animation: heartBeat 1s ease-in-out 3s forwards;
+            margin: 0 10px;
+            position: relative;
         }
 
-        @keyframes loaderAnimation {
-            0% { transform: scale(1); opacity: 1; }
-            90% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(0); opacity: 0; }
+        .welcome-title span:nth-child(1) {
+            font-family: 'Playfair Display', sans-serif;
+            color: #ff0055;
         }
 
-        @keyframes heartBeat {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(2); opacity: 0; }
+        .welcome-title span:nth-child(2) {
+            font-family: 'Montserrat', sans-serif;
+            color: #00ff88;
+        }
+
+        .welcome-title span:nth-child(3) {
+            font-family: 'Raleway', sans-serif;
+            color: #ff0055;
+        }
+
+        .welcome-title span:nth-child(4) {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff0055;
+            text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055, 0 0 30px #ff0055;
+        }
+
+        .welcome-subtitle {
+            font-size: 24px;
+            text-align: center;
+            margin-top: 20px;
+            background: linear-gradient(90deg, #ff0055, #00ff88, #ff0055);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: gradient 3s linear infinite;
+        }
+
+        .content-section {
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 60px auto;
+            max-width: 1200px;
         }
 
         .feature-card {
@@ -92,98 +125,271 @@
             border: 1px solid #ff0055;
             border-radius: 10px;
             padding: 30px;
-            transition: all 0.3s ease;
-            margin: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
         }
 
         .feature-card:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 0 30px rgba(255, 0, 85, 0.4);
-            background: rgba(255, 0, 85, 0.15);
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.3);
         }
 
         .feature-title {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: 24px;
             margin-bottom: 15px;
             color: #ff0055;
-            text-shadow: 0 0 5px #ff0055;
         }
 
-        /* Добавляем новые стили для панелей */
-        .panels-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        .feature-text {
+            font-family: 'Raleway', sans-serif;
+            line-height: 1.6;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .arrows {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .arrow {
+            width: 20px;
+            height: 20px;
+            border-right: 3px solid #ff0055;
+            border-bottom: 3px solid #ff0055;
+            transform: rotate(45deg);
+            margin: -10px;
+            animation: arrowBounce 2s infinite;
+        }
+
+        .neon-text {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff0055;
+            text-shadow: 0 0 5px #ff0055, 0 0 15px #ff0055, 0 0 30px #ff0055;
+            animation: neonPulse 1.5s ease-in-out infinite alternate;
+        }
+
+        .cursor-text {
+            position: fixed;
+            pointer-events: none;
+            font-family: 'Orbitron', sans-serif;
+            color: #ff0055;
+            text-shadow: 0 0 5px #ff0055, 0 0 15px #ff0055, 0 0 30px #ff0055;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer {
+            padding: 40px 0;
+            text-align: center;
+            background: rgba(10, 10, 10, 0.9);
+            border-top: 1px solid rgba(255, 0, 85, 0.3);
+        }
+
+        .social-links {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
             gap: 20px;
-            padding: 40px 20px;
         }
 
-        .panel {
-            background: rgba(255, 0, 85, 0.05);
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
             border: 1px solid #ff0055;
-            border-radius: 15px;
-            padding: 25px;
-            transition: all 0.4s ease;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            background: rgba(255, 0, 85, 0.1);
         }
 
-        .panel:hover {
-            transform: translateY(-15px) rotate(2deg);
-            box-shadow: 0 0 40px rgba(255, 0, 85, 0.3);
+        .social-link:hover {
+            background: rgba(255, 0, 85, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.3);
         }
 
-        /* Добавляем разные шрифты для текста */
-        .text-orbitron { font-family: 'Orbitron', sans-serif; }
-        .text-montserrat { font-family: 'Montserrat', sans-serif; }
-        .text-raleway { font-family: 'Raleway', sans-serif; }
-        .text-playfair { font-family: 'Playfair Display', serif; }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-20px); }
+        .social-link i {
+            margin-right: 10px;
+            color: #ff0055;
         }
 
-        /* Остальные стили остаются без изменений */
-        
+        .copyright {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff0055;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #ff0055, 0 0 10px #ff0055, 0 0 15px #ff0055;
+            }
+            to {
+                text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055, 0 0 30px #ff0055;
+            }
+        }
+
+        @keyframes arrowBounce {
+            0% { opacity: 0; transform: rotate(45deg) translate(-20px, -20px); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: rotate(45deg) translate(20px, 20px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes neonPulse {
+            from {
+                text-shadow: 0 0 5px #ff0055, 0 0 15px #ff0055, 0 0 30px #ff0055;
+            }
+            to {
+                text-shadow: 0 0 10px #ff0055, 0 0 25px #ff0055, 0 0 40px #ff0055;
+            }
+        }
+
+        @keyframes heartPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="custom-cursor"></div>
-    
     <div class="loader">
-        <div class="loader-content">
-            <div class="loader-text">ONSMALL</div>
-            <div class="loader-heart">❤</div>
+        <div class="loader-text">ONSMALL</div>
+    </div>
+
+    <div class="welcome-screen">
+        <h1 class="welcome-title">
+            <span>Добро</span>
+            <span>пожаловать</span>
+            <span>в</span>
+            <span>ONSMALL</span>
+        </h1>
+        <p class="welcome-subtitle">Ваш надежный партнер в мире криптовалют</p>
+        <div class="scroll-indicator">
+            <div class="arrows">
+                <div class="arrow"></div>
+                <div class="arrow"></div>
+                <div class="arrow"></div>
+            </div>
         </div>
     </div>
 
-    <!-- Основной контент остается без изменений -->
+    <section class="content-section">
+        <h2 class="neon-text">Наши преимущества</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3 class="feature-title">Безопасность</h3>
+                <p class="feature-text">Гарантируем безопасность всех операций и сохранность ваших средств</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Скорость</h3>
+                <p class="feature-text">Быстрая обработка транзакций и моментальная поддержка</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Надежность</h3>
+                <p class="feature-text">Проверенные временем решения и профессиональный подход</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2 class="neon-text">Присоединяйтесь к нам</h2>
+        <p class="welcome-subtitle">Станьте частью растущего сообщества ONSMALL</p>
+    </section>
+
+    <footer class="footer">
+        <div class="social-links">
+            <a href="https://t.me/BaconsTopRLLY" class="social-link" target="_blank">
+                <i class="fab fa-telegram"></i>Владелец
+            </a>
+            <a href="https://t.me/afradissa" class="social-link" target="_blank">
+                <i class="fab fa-telegram"></i>Заместитель
+            </a>
+            <a href="https://t.me/OnsmallReport" class="social-link" target="_blank">
+                <i class="fab fa-telegram"></i>База
+            </a>
+            <a href="https://t.me/OnsmallNews" class="social-link" target="_blank">
+                <i class="fab fa-telegram"></i>Канал
+            </a>
+            <a href="https://t.me/Onsmalbot" class="social-link" target="_blank">
+                <i class="fab fa-telegram"></i>Бот
+            </a>
+        </div>
+        <div class="copyright">
+            © 2025 ONSMALL
+        </div>
+    </footer>
 
     <script>
-        // Кастомный курсор и эффект слов
-        document.addEventListener('mousemove', (e) => {
-            const cursor = document.querySelector('.custom-cursor');
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-
-            if (Math.random() < 0.1) { // Регулируем частоту появления слов
-                const text = document.createElement('div');
-                text.className = 'cursor-text';
-                text.textContent = 'ONSMALL';
-                text.style.left = e.clientX + 'px';
-                text.style.top = e.clientY + 'px';
-                document.body.appendChild(text);
-
-                setTimeout(() => {
-                    text.remove();
-                }, 1000);
-            }
-        });
-
-        // Анимация загрузки
         window.addEventListener('load', () => {
             setTimeout(() => {
-                document.querySelector('.loader').style.display = 'none';
-            }, 4000); // Увеличиваем время для показа анимации сердца
+                document.querySelector('.loader').classList.add('hidden');
+                const heart = document.createElement('div');
+                heart.className = 'neon-text';
+                heart.style.position = 'fixed';
+                heart.style.top = '50%';
+                heart.style.left = '50%';
+                heart.style.transform = 'translate(-50%, -50%)';
+                heart.textContent = '❤';
+                heart.style.animation = 'heartPulse 1s ease-in-out';
+                heart.style.fontSize = '40px';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.style.opacity = '0';
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 500);
+                }, 2000);
+            }, 2000);
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            const cursorText = document.createElement('div');
+            cursorText.className = 'cursor-text';
+            cursorText.textContent = 'ONSMALL';
+            cursorText.style.left = e.clientX + 'px';
+            cursorText.style.top = e.clientY + 'px';
+            cursorText.style.position = 'absolute';
+            document.body.appendChild(cursorText);
+            
+            setTimeout(() => {
+                cursorText.style.opacity = '0';
+                setTimeout(() => {
+                    cursorText.remove();
+                }, 300);
+            }, 1000);
         });
     </script>
 </body>
