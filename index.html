@@ -2,7 +2,9 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONSMALL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -18,23 +20,44 @@
             height: 100%;
             background: #0a0a0a;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
 
         .heart {
-            width: 100px;
-            height: 100px;
+            width: 150px;
+            height: 150px;
             position: relative;
             animation: heartbeat 1.5s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px #ff0055);
+            filter: drop-shadow(0 0 15px #ff0055);
+            margin-bottom: 20px;
+        }
+
+        .loader-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 36px;
+            color: #ff0055;
+            text-shadow: 0 0 10px #ff0055;
+            animation: glow 1.5s ease-in-out infinite alternate;
         }
 
         @keyframes heartbeat {
             0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.2); }
             100% { transform: scale(1); }
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #ff0055, 0 0 10px #ff0055, 0 0 15px #ff0055;
+            }
+            to {
+                text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055, 0 0 30px #ff0055;
+            }
         }
 
         .main-content {
@@ -49,8 +72,9 @@
             border: 2px solid #ff0055;
             box-shadow: 0 0 10px #ff0055;
             border-radius: 10px;
-            padding: 15px;
+            padding: 25px;
             margin: 20px 0;
+            line-height: 1.6;
         }
 
         .nav-buttons {
@@ -58,33 +82,93 @@
             bottom: 0;
             width: 100%;
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             padding: 20px;
             background: rgba(10, 10, 10, 0.9);
+            gap: 30px;
         }
 
         .nav-button {
-            padding: 10px 30px;
+            padding: 15px 40px;
             border: 2px solid #ff0055;
             background: transparent;
             color: #fff;
-            border-radius: 25px;
+            border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 0 10px #ff0055;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .nav-button:hover {
             background: #ff0055;
-            box-shadow: 0 0 20px #ff0055;
+            box-shadow: 0 0 30px #ff0055;
+            transform: translateY(-3px);
         }
 
         .logo {
-            font-size: 48px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 64px;
             text-align: center;
             color: #ff0055;
-            text-shadow: 0 0 10px #ff0055;
+            text-shadow: 0 0 15px #ff0055;
             margin-bottom: 40px;
+            letter-spacing: 3px;
+        }
+
+        .welcome-text {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            padding: 20px;
+            border: 1px solid #ff0055;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 36px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .nav-button {
+                padding: 10px 20px;
+                font-size: 14px;
+                width: 90%;
+                margin: 0 auto;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .heart {
+                width: 100px;
+                height: 100px;
+            }
+
+            .loader-text {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
@@ -93,13 +177,31 @@
         <svg class="heart" viewBox="0 0 32 32">
             <path fill="#ff0055" d="M16 28.4l-1.4-1.4C6 19.5 2 15.9 2 11.6 2 8.2 4.7 5.5 8.1 5.5c1.9 0 3.7.9 4.9 2.3 1.2-1.4 3-2.3 4.9-2.3 3.4 0 6.1 2.7 6.1 6.1 0 4.3-4 7.9-12.6 15.4L16 28.4z"/>
         </svg>
+        <div class="loader-text">ONSMALL</div>
     </div>
 
     <div class="main-content">
         <div class="logo">ONSMALL</div>
         
         <div class="neon-border">
-            <!-- Здесь будет контент -->
+            <div class="welcome-text">
+                Добро пожаловать в ONSMALL - ваш путеводитель в мире дизайна
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <h3>Уникальные дизайны</h3>
+                    <p>Эксклюзивные шаблоны и решения для вашего проекта</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Профессиональная база</h3>
+                    <p>Огромная коллекция ресурсов для дизайнеров</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Поддержка 24/7</h3>
+                    <p>Всегда готовы помочь и ответить на ваши вопросы</p>
+                </div>
+            </div>
         </div>
     </div>
 
