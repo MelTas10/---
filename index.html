@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONSMALL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,6 +15,7 @@
 
         body {
             background-color: #f8f6f7;
+            min-height: 100vh;
         }
 
         .loader-container {
@@ -28,6 +29,7 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            transition: opacity 1s ease-out;
         }
 
         .loader {
@@ -39,6 +41,7 @@
             font-size: 48px;
             color: #b4888c;
             letter-spacing: 4px;
+            font-weight: 700;
             animation: fadeInOut 2s ease-in-out;
         }
 
@@ -66,16 +69,72 @@
             animation: heartBeat 1s ease-in-out;
         }
 
+        .content {
+            opacity: 0;
+            padding: 40px;
+            text-align: center;
+            transition: opacity 1s ease-in;
+        }
+
+        .main-title {
+            font-size: 120px;
+            color: #b4888c;
+            margin: 40px 0;
+            font-weight: 700;
+            letter-spacing: 8px;
+            animation: slideDown 1s ease-out;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 50px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(180, 136, 140, 0.2);
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideUp 0.5s ease-out forwards;
+        }
+
+        .card h2 {
+            color: #b4888c;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .card p {
+            color: #7a6769;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: #b4888c;
+            font-weight: 700;
+            animation: fadeIn 1s ease-out;
+        }
+
         @keyframes fadeInOut {
-            0% { opacity: 0; }
-            50% { opacity: 1; }
-            100% { opacity: 0; }
+            0% { opacity: 0; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.9); }
         }
 
         @keyframes loadingAnimation {
-            0% { width: 0; }
-            50% { width: 80px; }
-            100% { width: 0; }
+            0% { width: 0; opacity: 0; }
+            50% { width: 80px; opacity: 1; }
+            100% { width: 0; opacity: 0; }
         }
 
         @keyframes heartBeat {
@@ -84,20 +143,18 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        .content {
-            display: none;
-            padding: 20px;
-            text-align: center;
+        @keyframes slideDown {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .content h1 {
-            color: #b4888c;
-            margin: 20px 0;
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .content p {
-            color: #7a6769;
-            line-height: 1.6;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
@@ -112,9 +169,28 @@
     </div>
 
     <div class="content">
-        <!-- Здесь ваш основной контент -->
-        <h1>Добро пожаловать в ONSMALL</h1>
-        <p>Ваш контент здесь...</p>
+        <h1 class="main-title">ONSMALL</h1>
+        <div class="cards-container">
+            <div class="card" style="animation-delay: 0.2s">
+                <h2>Борьба со скамом</h2>
+                <p>Активное противодействие мошенническим схемам и защита пользователей</p>
+            </div>
+            <div class="card" style="animation-delay: 0.4s">
+                <h2>База данных</h2>
+                <p>Актуальная информация о выявленных случаях мошенничества</p>
+            </div>
+            <div class="card" style="animation-delay: 0.6s">
+                <h2>Безопасность</h2>
+                <p>Современные методы защиты и предотвращения мошеннических действий</p>
+            </div>
+            <div class="card" style="animation-delay: 0.8s">
+                <h2>Сообщество</h2>
+                <p>Объединение усилий в борьбе с мошенничеством</p>
+            </div>
+        </div>
+        <footer class="footer">
+            © 2025 ONSMALL. All Rights Reserved.
+        </footer>
     </div>
 
     <script>
@@ -123,8 +199,11 @@
             document.querySelector('.heart').style.display = 'block';
             
             setTimeout(() => {
-                document.querySelector('.loader-container').style.display = 'none';
-                document.querySelector('.content').style.display = 'block';
+                document.querySelector('.loader-container').style.opacity = '0';
+                document.querySelector('.content').style.opacity = '1';
+                setTimeout(() => {
+                    document.querySelector('.loader-container').style.display = 'none';
+                }, 1000);
             }, 1000);
         }, 2000);
     </script>
