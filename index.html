@@ -34,13 +34,21 @@
             top: 20px;
             left: 20px;
             background: #000000;
-            color: #ff0000;
+            color: var(--primary-color);
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            box-shadow: 0 0 10px #ff0000;
+            box-shadow: 0 0 10px var(--primary-color);
             z-index: 1001;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .settings-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .settings-panel {
@@ -49,34 +57,46 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px var(--primary-color);
+            background: rgba(26, 26, 26, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px var(--primary-color);
             z-index: 1002;
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--primary-color);
+            min-width: 300px;
         }
 
         .theme-option {
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid var(--primary-color);
-            border-radius: 5px;
+            margin: 15px 0;
+            padding: 15px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
             cursor: pointer;
+            color: var(--text-color);
+            transition: all 0.3s ease;
         }
 
         .theme-option:hover {
-            background: rgba(255, 0, 0, 0.1);
+            background: rgba(255, 0, 0, 0.2);
+            transform: scale(1.05);
         }
 
         .settings-panel button {
-            margin: 5px;
-            padding: 8px 15px;
+            margin: 10px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             background: #000000;
-            color: #ff0000;
-            box-shadow: 0 0 5px #ff0000;
+            color: var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .settings-panel button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--primary-color);
         }
 
         @keyframes neonPulse {
@@ -99,7 +119,7 @@
         .heart-particle {
             position: fixed;
             pointer-events: none;
-            color: #ff4d4d;
+            color: var(--primary-color);
             animation: floatHeart 3s ease-out forwards;
             opacity: 0;
             font-size: 24px;
@@ -182,7 +202,7 @@
             background: #1a1a1a;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 15px var(--primary-color);
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             overflow: hidden;
@@ -190,7 +210,7 @@
 
         .card:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 25px var(--primary-color);
         }
 
         .card.clicked::after {
@@ -200,7 +220,7 @@
             left: 50%;
             width: 300px;
             height: 300px;
-            background: radial-gradient(circle, rgba(255,0,0,0.2) 0%, rgba(255,0,0,0) 70%);
+            background: radial-gradient(circle, var(--primary-color) 0%, rgba(255,0,0,0) 70%);
             transform: translate(-50%, -50%);
             animation: ripple 0.6s linear;
         }
@@ -231,8 +251,6 @@
             text-align: center;
             color: var(--text-color);
             font-size: 14px;
-            background: var(--background-color);
-            padding: 5px;
         }
 
         @media (max-width: 768px) {
@@ -250,7 +268,7 @@
     <button class="settings-btn" onclick="toggleSettings()">Настройки</button>
     
     <div class="settings-panel" id="settingsPanel">
-        <h3 style="color: #ff0000; margin-bottom: 15px;">Настройки темы</h3>
+        <h3 style="color: var(--primary-color); margin-bottom: 15px;">Настройки темы</h3>
         <div class="theme-option" onclick="changeTheme('dark')">Черно-красная</div>
         <div class="theme-option" onclick="changeTheme('light')">Бело-черная</div>
         <div class="theme-option" onclick="changeTheme('purple')">Фиолетово-черная</div>
@@ -297,7 +315,7 @@
         </div>
     </div>
 
-    <footer class="footer">© 2025 ONSMALL COPYRIGHT RESERVED</footer>
+    <footer class="footer">ONSMALL</footer>
 
     <script>
         function toggleSettings() {
@@ -354,6 +372,7 @@
             setTimeout(() => {
                 document.querySelector('.loader-container').style.opacity = '0';
                 document.querySelector('.content').style.opacity = '1';
+                document.querySelector('.settings-btn').classList.add('visible');
                 setTimeout(() => {
                     document.querySelector('.loader-container').style.display = 'none';
                 }, 1000);
