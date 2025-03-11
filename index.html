@@ -4,263 +4,180 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONSMALL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        :root {
-            --main-color: #ff0055;
-            --text-light: #e6e6e6;
-            --text-dark: #cccccc;
-            --bg-color: #0a0a0a;
+            cursor: none;
         }
 
         body {
-            background: var(--bg-color);
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .panel-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-
-        .panel {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--main-color);
-            border-radius: 15px;
-            padding: 25px;
-            transition: all 0.3s ease;
-            position: relative;
+            background: #000;
+            height: 100vh;
             overflow: hidden;
-        }
-
-        .panel:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(255, 0, 85, 0.2);
-        }
-
-        .panel::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 0, 85, 0.1),
-                transparent
-            );
-            transition: 0.5s;
-        }
-
-        .panel:hover::before {
-            left: 100%;
-        }
-
-        .panel-title {
-            font-size: 22px;
-            font-weight: 600;
-            color: var(--main-color);
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .panel-title::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 50px;
-            height: 2px;
-            background: var(--main-color);
-            transition: width 0.3s ease;
-        }
-
-        .panel:hover .panel-title::after {
-            width: 100px;
-        }
-
-        .panel-content {
-            color: var(--text-dark);
-            font-size: 16px;
-            font-weight: 400;
-        }
-
-        .feature-list {
-            margin: 15px 0;
-            list-style: none;
-        }
-
-        .feature-item {
-            padding: 8px 0;
-            color: var(--text-light);
             display: flex;
             align-items: center;
-            animation: slideIn 0.5s ease forwards;
-            opacity: 0;
-            transform: translateX(-20px);
+            justify-content: center;
         }
 
-        .feature-item::before {
-            content: '→';
-            color: var(--main-color);
-            margin-right: 10px;
-            transition: transform 0.3s ease;
+        .heart {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: pulse 1.5s infinite;
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
         }
 
-        .feature-item:hover::before {
-            transform: translateX(5px);
+        .heart::before,
+        .heart::after {
+            content: '❤️';
+            position: absolute;
+            font-size: 40px;
+            text-shadow: 0 0 20px rgba(255, 0, 85, 0.8);
+            transform-origin: center;
         }
 
-        .stat-panel {
-            text-align: center;
-            padding: 30px;
+        .heart::before {
+            transform: translateZ(10px);
         }
 
-        .stat-number {
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--main-color);
-            margin-bottom: 10px;
-            animation: countUp 2s ease-out forwards;
+        .heart::after {
+            transform: translateZ(-10px);
         }
 
-        .info-card {
-            background: linear-gradient(45deg, rgba(255,0,85,0.1), transparent);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 30px;
-        }
-
-        .info-card h3 {
-            color: var(--main-color);
+        .trail {
+            position: fixed;
+            pointer-events: none;
+            font-family: Arial, sans-serif;
+            color: #ff0055;
             font-size: 20px;
-            margin-bottom: 15px;
-        }
-
-        .info-card p {
-            color: var(--text-light);
-        }
-
-        @keyframes slideIn {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes countUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
+            animation: fadeOut 1s forwards;
+            white-space: nowrap;
         }
 
         @keyframes pulse {
             0% {
-                transform: scale(1);
+                transform: scale3d(1, 1, 1) rotate3d(0, 1, 0, 0deg);
             }
             50% {
-                transform: scale(1.05);
+                transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 1, 0, 180deg);
             }
             100% {
-                transform: scale(1);
+                transform: scale3d(1, 1, 1) rotate3d(0, 1, 0, 360deg);
             }
         }
 
-        .floating {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
+        @keyframes fadeOut {
             0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
+                opacity: 1;
+                transform: translateY(0) scale(1);
             }
             100% {
-                transform: translateY(0px);
+                opacity: 0;
+                transform: translateY(-20px) scale(0.8);
+            }
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #000, #1a0010);
+            z-index: -1;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 1.5s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(100px, 100px);
             }
         }
 
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="panel-grid">
-            <div class="panel">
-                <h2 class="panel-title">Функционал</h2>
-                <ul class="feature-list">
-                    <li class="feature-item">Быстрая загрузка</li>
-                    <li class="feature-item">Адаптивный дизайн</li>
-                    <li class="feature-item">Современные технологии</li>
-                    <li class="feature-item">Оптимизация SEO</li>
-                </ul>
-            </div>
-
-            <div class="panel stat-panel">
-                <div class="stat-number pulse">98%</div>
-                <p class="panel-content">Удовлетворенность клиентов</p>
-            </div>
-
-            <div class="panel">
-                <h2 class="panel-title">Преимущества</h2>
-                <p class="panel-content">
-                    Инновационные решения для вашего бизнеса с использованием
-                    передовых технологий и современных подходов
-                </p>
-            </div>
-        </div>
-
-        <div class="panel-grid">
-            <div class="info-card floating">
-                <h3>Инновации</h3>
-                <p>Используем передовые технологии для достижения максимальных результатов</p>
-            </div>
-
-            <div class="info-card floating">
-                <h3>Качество</h3>
-                <p>Гарантируем высокое качество всех предоставляемых услуг</p>
-            </div>
-
-            <div class="info-card floating">
-                <h3>Поддержка</h3>
-                <p>Обеспечиваем круглосуточную техническую поддержку</p>
-            </div>
-        </div>
-    </div>
+    <div class="background"></div>
+    <div class="heart"></div>
 
     <script>
-        // Анимация появления элементов списка
-        document.querySelectorAll('.feature-item').forEach((item, index) => {
-            item.style.animationDelay = `${index * 0.2}s`;
+        const heart = document.querySelector('.heart');
+        let lastX = 0;
+        let lastY = 0;
+        let trails = [];
+
+        // Следование за курсором
+        document.addEventListener('mousemove', (e) => {
+            lastX = e.clientX;
+            lastY = e.clientY;
+            
+            heart.style.left = `${lastX - 20}px`;
+            heart.style.top = `${lastY - 20}px`;
+
+            // Создание текста ONSMALL
+            if (Math.random() < 0.1) {
+                createTrail();
+            }
+
+            // Создание искр
+            if (Math.random() < 0.2) {
+                createSparkle(e.clientX, e.clientY);
+            }
         });
+
+        function createTrail() {
+            const trail = document.createElement('div');
+            trail.className = 'trail';
+            trail.textContent = 'ONSMALL';
+            trail.style.left = `${lastX}px`;
+            trail.style.top = `${lastY}px`;
+            document.body.appendChild(trail);
+
+            setTimeout(() => {
+                trail.remove();
+            }, 1000);
+        }
+
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = `${x}px`;
+            sparkle.style.top = `${y}px`;
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1500);
+        }
+
+        // Автоматическое создание искр
+        setInterval(() => {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            createSparkle(x, y);
+        }, 100);
+
     </script>
 </body>
 </html>
